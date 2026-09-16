@@ -146,6 +146,25 @@
   .tutorials a:hover { text-decoration: underline; }
 
   .empty-state { text-align: center; color: var(--muted); font-size: 0.9rem; padding: 40px 0; }
+
+  .section-title {
+    font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.2rem;
+    margin: 24px 0 12px;
+  }
+  .site-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin-bottom: 10px;
+  }
+  .site-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .site-icon { font-size: 1.15rem; line-height: 1; }
+  .site-name { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 0.98rem; margin: 0; }
+  .site-desc { color: var(--muted); font-size: 0.84rem; margin: 0 0 8px; }
+  .site-links { border-top: 1px dashed var(--border); padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .site-links-row { display: flex; align-items: baseline; gap: 8px; font-size: 0.8rem; flex-wrap: wrap; }
+  .site-links-label { font-weight: 600; color: var(--ink); flex-shrink: 0; min-width: 80px; }
+  .site-links-row a { color: var(--accent); font-weight: 600; text-decoration: none; word-break: break-all; }
+  .site-links-row a:hover { text-decoration: underline; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 </style>
 
 <div class="topbar">
@@ -153,9 +172,6 @@
     <p class="eyebrow">Acesso interno</p>
     <h1>Central de Ferramentas</h1>
     <p class="subtitle">Inventário das ferramentas usadas no processo de trabalho — busca e filtros por tipo, função e projeto.</p>
-    <nav class="top-nav">
-      <a href="meus-sites.html">🔑 Meus Sites</a>
-    </nav>
     <div class="search-box">
       <input type="text" id="busca" placeholder="Buscar por nome ou descrição...">
     </div>
@@ -164,6 +180,57 @@
 </div>
 
 <div class="wrap">
+
+  <h2 class="section-title">🗂️ Meus Sites</h2>
+
+  <div class="site-card">
+    <div class="site-head"><span class="site-icon">🥖</span><h3 class="site-name">Padaria Vila Nova</h3></div>
+    <p class="site-desc">Site da cliente, no ar via Cloudflare.</p>
+    <div class="site-links">
+      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://padaria-vila-nova.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">padaria-vila-nova.oracaobomdiajesus.workers.dev</a></div>
+      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/</a></div>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Catálogo</h3></div>
+    <p class="site-desc">Template simples com vitrine de produtos e carrinho via WhatsApp.</p>
+    <div class="site-links">
+      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-catalogo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-catalogo.oracaobomdiajesus.workers.dev</a></div>
+      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo/</a></div>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Catálogo Completo</h3></div>
+    <p class="site-desc">Versão completa do modelo de catálogo, com mais seções.</p>
+    <div class="site-links">
+      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-catalogo-completo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-catalogo-completo.oracaobomdiajesus.workers.dev</a></div>
+      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo-completo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo-completo/</a></div>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Institucional</h3></div>
+    <p class="site-desc">Template simples de apresentação do negócio, com contatos e redes.</p>
+    <div class="site-links">
+      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-institucional.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-institucional.oracaobomdiajesus.workers.dev</a></div>
+      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional/</a></div>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Institucional Completo</h3></div>
+    <p class="site-desc">Versão completa do modelo institucional, com serviços, tabela de preços e blog.</p>
+    <div class="site-links">
+      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-institucional-completo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-institucional-completo.oracaobomdiajesus.workers.dev</a></div>
+      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional-completo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional-completo/</a></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2 class="section-title">🧰 Ferramentas</h2>
   <p class="result-count" id="contagem"></p>
   <div id="lista"></div>
   <div class="empty-state" id="vazio" hidden>Nenhuma ferramenta encontrada com esses filtros.</div>
