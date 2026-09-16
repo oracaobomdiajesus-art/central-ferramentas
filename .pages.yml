@@ -10,8 +10,9 @@ content:
     format: "yaml"
     fields:
       - name: "itens"
-        label: "Lista de ferramentas"
-        type: "list"
+        label: "Ferramentas"
+        type: "object"
+        list: true
         fields:
           - name: "nome"
             label: "Nome"
@@ -36,7 +37,8 @@ content:
           - name: "projetos"
             label: "Projetos onde é usada"
             description: "Ex: GMN. Pode adicionar quantos quiser."
-            type: "list"
+            type: "string"
+            list: true
           - name: "planoGratis"
             label: "Plano gratuito"
             type: "select"
@@ -62,7 +64,8 @@ content:
           - name: "tutoriais"
             label: "Tutoriais"
             description: "Sem limite de quantidade"
-            type: "list"
+            type: "object"
+            list: true
             fields:
               - name: "titulo"
                 label: "Título do tutorial"
@@ -78,8 +81,9 @@ content:
     format: "yaml"
     fields:
       - name: "itens"
-        label: "Lista de sites"
-        type: "list"
+        label: "Sites"
+        type: "object"
+        list: true
         fields:
           - name: "icone"
             label: "Ícone (emoji)"
