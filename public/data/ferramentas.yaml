@@ -1,0 +1,78 @@
+itens:
+  - nome: "ManyChat"
+    tipo: "Plataforma"
+    funcao: "Automação WhatsApp/Instagram"
+    descricao: "Cria fluxos de resposta automática para Instagram Direct, WhatsApp e Messenger — atendimento e captação sem precisar responder tudo manualmente."
+    link: "https://manychat.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "até 1.000 contatos, com recursos básicos de automação"
+    planoPago: "a partir de ~US$15/mês (varia conforme número de contatos)"
+    verificadoEm: "2026-09-16"
+    tutoriais: []
+
+  - nome: "Metricool"
+    tipo: "Plataforma"
+    funcao: "Agendamento e Analytics de Redes Sociais"
+    descricao: "Agenda publicações em várias redes de uma vez só e gera relatórios de desempenho, tudo em um único painel."
+    link: "https://metricool.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "1 marca/perfil, com funções básicas de agendamento e métricas"
+    planoPago: "a partir de ~US$18/mês (planos variam por número de marcas e recursos)"
+    verificadoEm: "2026-09-16"
+    tutoriais: []
+
+  - nome: "Meta Business Suite"
+    tipo: "Plataforma"
+    funcao: "Gestão de Instagram e Facebook"
+    descricao: "Painel oficial da Meta para gerenciar Instagram e Facebook juntos: mensagens, publicações agendadas e anúncios."
+    link: "https://business.facebook.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "ilimitado"
+    limiteGratis: ""
+    planoPago: "Sem mensalidade fixa — só o investimento em anúncios, que é variável"
+    verificadoEm: "2026-09-16"
+    tutoriais: []
+
+  - nome: "Local Falcon"
+    tipo: "Plataforma"
+    funcao: "SEO Local — Ranking no Google Maps"
+    descricao: "Mostra como o negócio aparece no Google Maps em vários pontos geográficos ao redor, ajudando a identificar onde o SEO local precisa melhorar."
+    link: "https://www.localfalcon.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "alguns escaneamentos de teste grátis ao criar a conta"
+    planoPago: "a partir de ~US$20/mês (ou pacotes avulsos por escaneamento)"
+    verificadoEm: "2026-09-16"
+    tutoriais: []
+
+  - nome: "Google Search Console"
+    tipo: "Plataforma"
+    funcao: "SEO — Monitoramento de Buscas"
+    descricao: "Ferramenta oficial do Google para ver como o site aparece nas buscas, quais termos trazem visitas, e corrigir problemas técnicos de indexação."
+    link: "https://search.google.com/search-console"
+    projetos:
+      - "GMN"
+    planoGratis: "ilimitado"
+    limiteGratis: ""
+    planoPago: ""
+    verificadoEm: "2026-09-16"
+    tutoriais: []
+
+  - nome: "Whitespark (Local Citation Finder)"
+    tipo: "Plataforma"
+    funcao: "SEO Local — Sondagem de Diretórios/Concorrentes"
+    descricao: "Encontra em quais diretórios e plataformas os concorrentes estão listados, para identificar onde também cadastrar o negócio (citações locais)."
+    link: "https://whitespark.ca/local-citation-finder/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "número reduzido de buscas grátis por conta"
+    planoPago: "a partir de ~US$30/mês"
+    verificadoEm: "2026-09-16"
+    tutoriais: []

@@ -1,5 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:96px}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Central de Ferramentas</title>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -437,11 +438,11 @@ $("busca").addEventListener("input", (e) => {
 async function carregarDados() {
   try {
     const [rFerramentas, rSites] = await Promise.all([
-      fetch("/data/ferramentas.json", { cache: "no-store" }),
-      fetch("/data/sites.json", { cache: "no-store" })
+      fetch("/data/ferramentas.yaml", { cache: "no-store" }),
+      fetch("/data/sites.yaml", { cache: "no-store" })
     ]);
-    const dadosFerramentas = rFerramentas.ok ? await rFerramentas.json() : null;
-    const dadosSites = rSites.ok ? await rSites.json() : null;
+    const dadosFerramentas = rFerramentas.ok ? jsyaml.load(await rFerramentas.text()) : null;
+    const dadosSites = rSites.ok ? jsyaml.load(await rSites.text()) : null;
     FERRAMENTAS = (dadosFerramentas && dadosFerramentas.itens) || FERRAMENTAS_SEED;
     SITES = (dadosSites && dadosSites.itens) || SITES_SEED;
   } catch (e) {

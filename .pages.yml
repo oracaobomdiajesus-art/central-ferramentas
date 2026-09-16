@@ -6,8 +6,8 @@ content:
   - name: "ferramentas"
     label: "🧰 Ferramentas"
     type: "file"
-    path: "public/data/ferramentas.json"
-    format: "json"
+    path: "public/data/ferramentas.yaml"
+    format: "yaml"
     fields:
       - name: "itens"
         label: "Lista de ferramentas"
@@ -74,8 +74,8 @@ content:
   - name: "sites"
     label: "🗂️ Meus Sites"
     type: "file"
-    path: "public/data/sites.json"
-    format: "json"
+    path: "public/data/sites.yaml"
+    format: "yaml"
     fields:
       - name: "itens"
         label: "Lista de sites"
