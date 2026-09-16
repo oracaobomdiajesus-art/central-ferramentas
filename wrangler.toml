@@ -1,0 +1,7 @@
+name = "central-ferramentas"
+compatibility_date = "2026-09-16"
+main = "src/index.js"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
