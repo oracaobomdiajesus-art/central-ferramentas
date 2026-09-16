@@ -213,51 +213,7 @@
 <div class="wrap">
 
   <h2 class="section-title">🗂️ Meus Sites</h2>
-
-  <div class="site-card">
-    <div class="site-head"><span class="site-icon">🥖</span><h3 class="site-name">Padaria Vila Nova</h3></div>
-    <p class="site-desc">Site da cliente, no ar via Cloudflare.</p>
-    <div class="site-links">
-      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://padaria-vila-nova.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">padaria-vila-nova.oracaobomdiajesus.workers.dev</a></div>
-      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/</a></div>
-    </div>
-  </div>
-
-  <div class="site-card">
-    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Catálogo</h3></div>
-    <p class="site-desc">Template simples com vitrine de produtos e carrinho via WhatsApp.</p>
-    <div class="site-links">
-      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-catalogo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-catalogo.oracaobomdiajesus.workers.dev</a></div>
-      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo/</a></div>
-    </div>
-  </div>
-
-  <div class="site-card">
-    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Catálogo Completo</h3></div>
-    <p class="site-desc">Versão completa do modelo de catálogo, com mais seções.</p>
-    <div class="site-links">
-      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-catalogo-completo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-catalogo-completo.oracaobomdiajesus.workers.dev</a></div>
-      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo-completo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-catalogo-completo/</a></div>
-    </div>
-  </div>
-
-  <div class="site-card">
-    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Institucional</h3></div>
-    <p class="site-desc">Template simples de apresentação do negócio, com contatos e redes.</p>
-    <div class="site-links">
-      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-institucional.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-institucional.oracaobomdiajesus.workers.dev</a></div>
-      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional/</a></div>
-    </div>
-  </div>
-
-  <div class="site-card">
-    <div class="site-head"><span class="site-icon">📄</span><h3 class="site-name">Site Modelo — Institucional Completo</h3></div>
-    <p class="site-desc">Versão completa do modelo institucional, com serviços, tabela de preços e blog.</p>
-    <div class="site-links">
-      <div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="https://site-modelo-institucional-completo.oracaobomdiajesus.workers.dev" target="_blank" rel="noopener">site-modelo-institucional-completo.oracaobomdiajesus.workers.dev</a></div>
-      <div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional-completo/" target="_blank" rel="noopener">app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional-completo/</a></div>
-    </div>
-  </div>
+  <div id="lista-sites"></div>
 
   <hr class="divider">
 
@@ -268,7 +224,9 @@
 </div>
 
 <script>
-const FERRAMENTAS = [
+let FERRAMENTAS = [];
+let SITES = [];
+const FERRAMENTAS_SEED = [
   {
     nome: "ManyChat",
     tipo: "Plataforma",
@@ -349,7 +307,22 @@ const FERRAMENTAS = [
   }
 ];
 
+const SITES_SEED = [];
+
 function $(id) { return document.getElementById(id); }
+
+function renderSites() {
+  $("lista-sites").innerHTML = SITES.map(s => `
+    <div class="site-card">
+      <div class="site-head"><span class="site-icon">${s.icone || "🔗"}</span><h3 class="site-name">${s.nome}</h3></div>
+      ${s.descricao ? `<p class="site-desc">${s.descricao}</p>` : ""}
+      <div class="site-links">
+        ${s.siteUrl ? `<div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="${s.siteUrl}" target="_blank" rel="noopener">${s.siteUrl.replace(/^https?:\/\//, "")}</a></div>` : ""}
+        ${s.cmsUrl ? `<div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="${s.cmsUrl}" target="_blank" rel="noopener">${s.cmsUrl.replace(/^https?:\/\//, "")}</a></div>` : ""}
+      </div>
+    </div>
+  `).join("");
+}
 
 let filtroAtivo = { tipo: null, funcao: null, projeto: null };
 let termoBusca = "";
@@ -461,8 +434,26 @@ $("busca").addEventListener("input", (e) => {
   renderLista();
 });
 
-renderFiltros();
-renderLista();
+async function carregarDados() {
+  try {
+    const [rFerramentas, rSites] = await Promise.all([
+      fetch("/data/ferramentas.json", { cache: "no-store" }),
+      fetch("/data/sites.json", { cache: "no-store" })
+    ]);
+    const dadosFerramentas = rFerramentas.ok ? await rFerramentas.json() : null;
+    const dadosSites = rSites.ok ? await rSites.json() : null;
+    FERRAMENTAS = (dadosFerramentas && dadosFerramentas.itens) || FERRAMENTAS_SEED;
+    SITES = (dadosSites && dadosSites.itens) || SITES_SEED;
+  } catch (e) {
+    FERRAMENTAS = FERRAMENTAS_SEED;
+    SITES = SITES_SEED;
+  }
+  renderSites();
+  renderFiltros();
+  renderLista();
+}
+
+carregarDados();
 
 (function () {
   const toggleBtn = $("toggle-header");
