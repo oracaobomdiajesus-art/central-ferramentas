@@ -1,0 +1,420 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:96px}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Central de Ferramentas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F7F6;
+    --surface: #FFFFFF;
+    --surface-2: #EEF2EF;
+    --ink: #1F2A24;
+    --muted: #5B6B62;
+    --accent: #2F7A5C;
+    --accent-ink: #FFFFFF;
+    --border: #DDE3DE;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121815;
+      --surface: #1B2320;
+      --surface-2: #212B27;
+      --ink: #EDF2EE;
+      --muted: #9FB0A6;
+      --accent: #4FAE82;
+      --accent-ink: #0B140F;
+      --border: #2A332E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121815;
+    --surface: #1B2320;
+    --surface-2: #212B27;
+    --ink: #EDF2EE;
+    --muted: #9FB0A6;
+    --accent: #4FAE82;
+    --accent-ink: #0B140F;
+    --border: #2A332E;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 16px 64px;
+  }
+
+  .topbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: var(--bg);
+    padding: 18px 16px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topbar-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 0 0 14px;
+    max-width: 62ch;
+  }
+
+  .cat-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cat-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 12px;
+  }
+
+  .cat-nav a:hover {
+    border-color: var(--accent);
+  }
+
+  .intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .intro-card strong { color: var(--ink); }
+
+  .category {
+    margin-top: 30px;
+    scroll-margin-top: 14px;
+  }
+
+  .category-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .category-icon {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.1rem;
+  }
+
+  .category-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+
+  .tool-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .tool-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .tool-name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .tool-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0 0 12px;
+    max-width: 64ch;
+  }
+
+  .tool-meta {
+    border-top: 1px dashed var(--border);
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tool-meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.82rem;
+  }
+
+  .tool-meta-label {
+    font-weight: 600;
+    color: var(--ink);
+    flex-shrink: 0;
+    min-width: 92px;
+  }
+
+  .tool-meta-value {
+    color: var(--muted);
+  }
+
+  .tool-meta-value.empty {
+    font-style: italic;
+  }
+
+  .tool-meta-value a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .tool-meta-value a:hover {
+    text-decoration: underline;
+  }
+
+  footer.note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 30px;
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <p class="eyebrow">Guia rápido das plataformas</p>
+    <h1>Central de Ferramentas</h1>
+    <p class="subtitle">Pra que serve cada plataforma que seu negócio usa, em linguagem simples — com espaço pra tutorial em vídeo e material de apoio conforme forem ficando prontos.</p>
+    <nav class="cat-nav">
+      <a href="#presenca">🌐 Presença Online</a>
+      <a href="#redes">📱 Redes Sociais</a>
+      <a href="#google">📍 Google</a>
+      <a href="#gestao">⚙️ Automação &amp; Gestão</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="intro-card">
+    Esta página é uma central viva: vou completando com vídeos e materiais de apoio aos poucos. <strong>Sempre que quiser algo novo aqui, é só me pedir</strong> — não precisa mexer em nada, eu atualizo e o link continua o mesmo.
+  </div>
+
+  <section class="category" id="presenca">
+    <div class="category-head">
+      <span class="category-icon">🌐</span>
+      <h2 class="category-title">Presença Online</h2>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">🌐</span>
+        <h3 class="tool-name">Site</h3>
+      </div>
+      <p class="tool-desc">O endereço oficial do seu negócio na internet — a base de tudo, pra onde você manda as pessoas quando quer que conheçam ou confiem no seu trabalho.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">✏️</span>
+        <h3 class="tool-name">Painel de Edição (CMS)</h3>
+      </div>
+      <p class="tool-desc">O painel onde você mesmo atualiza textos, fotos e preços do site, sem precisar mexer em código nem depender de mim pra cada alteração pequena.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="category" id="redes">
+    <div class="category-head">
+      <span class="category-icon">📱</span>
+      <h2 class="category-title">Redes Sociais</h2>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📸</span>
+        <h3 class="tool-name">Instagram</h3>
+      </div>
+      <p class="tool-desc">Vitrine visual do seu negócio — fotos, vídeos e stories pra mostrar o dia a dia, criar proximidade e atrair clientes novos.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📘</span>
+        <h3 class="tool-name">Facebook</h3>
+      </div>
+      <p class="tool-desc">Página pública do negócio, importante pra quem ainda usa o Facebook pra buscar horários, endereço e avaliações.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">🎥</span>
+        <h3 class="tool-name">YouTube</h3>
+      </div>
+      <p class="tool-desc">Canal de vídeos mais longos — tutoriais, bastidores, depoimentos. Também ajuda seu negócio a aparecer nas buscas do Google.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">🎵</span>
+        <h3 class="tool-name">TikTok</h3>
+      </div>
+      <p class="tool-desc">Vídeos curtos e dinâmicos pra alcançar um público novo, geralmente mais jovem, com conteúdo mais espontâneo.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">🎬</span>
+        <h3 class="tool-name">Kwai</h3>
+      </div>
+      <p class="tool-desc">Outra rede de vídeos curtos, forte em algumas regiões do Brasil — mais um canal pra distribuir o mesmo conteúdo do TikTok/Reels.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="category" id="google">
+    <div class="category-head">
+      <span class="category-icon">📍</span>
+      <h2 class="category-title">Google</h2>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📍</span>
+        <h3 class="tool-name">Perfil da Empresa no Google</h3>
+      </div>
+      <p class="tool-desc">Sua ficha no Google Maps e nas buscas — é o que aparece quando alguém procura seu negócio pelo nome ou pelo tipo de serviço perto dele. Essencial pra avaliações e pra aparecer no mapa.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="category" id="gestao">
+    <div class="category-head">
+      <span class="category-icon">⚙️</span>
+      <h2 class="category-title">Automação &amp; Gestão</h2>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📊</span>
+        <h3 class="tool-name">Meta Business Suite</h3>
+      </div>
+      <p class="tool-desc">Painel único pra gerenciar Instagram e Facebook juntos: mensagens, publicações agendadas e anúncios em um só lugar.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">🤖</span>
+        <h3 class="tool-name">ManyChat</h3>
+      </div>
+      <p class="tool-desc">Automação de respostas no Instagram e WhatsApp — programa mensagens automáticas pra quando alguém comenta ou manda mensagem, sem você precisar responder tudo na mão.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📈</span>
+        <h3 class="tool-name">Metricool</h3>
+      </div>
+      <p class="tool-desc">Painel pra agendar publicações em várias redes de uma vez só e ver relatórios de desempenho, tudo num lugar só.</p>
+      <div class="tool-meta">
+        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
+        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">Central de Ferramentas — atualizada conforme os materiais forem ficando prontos.</footer>
+</div>
+
+</body></html>
