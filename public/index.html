@@ -14,6 +14,12 @@
     --accent-ink: #FFFFFF;
     --border: #DDE3DE;
     --radius: 14px;
+    --ok-bg: #E3F2E9;
+    --ok-ink: #1D6B41;
+    --warn-bg: #FBEFE3;
+    --warn-ink: #7A4A17;
+    --off-bg: #F0EFEC;
+    --off-ink: #6B675F;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -25,6 +31,12 @@
       --accent: #4FAE82;
       --accent-ink: #0B140F;
       --border: #2A332E;
+      --ok-bg: #16301F;
+      --ok-ink: #7BD9A5;
+      --warn-bg: #2E2416;
+      --warn-ink: #E7BE8B;
+      --off-bg: #262622;
+      --off-ink: #A6A29A;
     }
   }
   :root[data-theme="dark"] {
@@ -36,10 +48,14 @@
     --accent: #4FAE82;
     --accent-ink: #0B140F;
     --border: #2A332E;
+    --ok-bg: #16301F;
+    --ok-ink: #7BD9A5;
+    --warn-bg: #2E2416;
+    --warn-ink: #E7BE8B;
+    --off-bg: #262622;
+    --off-ink: #A6A29A;
   }
-
   * { box-sizing: border-box; }
-
   body {
     margin: 0;
     background: var(--bg);
@@ -47,375 +63,301 @@
     font-family: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.5;
   }
-
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 16px 64px;
-  }
-
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 16px 64px; }
   .topbar {
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 20;
-    background: var(--bg);
-    padding: 18px 16px 12px;
-    border-bottom: 1px solid var(--border);
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: var(--bg); padding: 18px 16px 12px; border-bottom: 1px solid var(--border);
   }
-
-  .topbar-inner {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
+  .topbar-inner { max-width: 820px; margin: 0 auto; }
   .eyebrow {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 4px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 4px;
   }
-
   h1 {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    margin: 0 0 6px;
-    text-wrap: balance;
+    font-family: "Fraunces", Georgia, serif; font-weight: 600;
+    font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 6px; text-wrap: balance;
   }
-
-  .subtitle {
-    color: var(--muted);
-    font-size: 0.92rem;
-    margin: 0 0 14px;
-    max-width: 62ch;
+  .subtitle { color: var(--muted); font-size: 0.92rem; margin: 0 0 14px; max-width: 62ch; }
+  .top-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .top-nav a {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
+    color: var(--ink); text-decoration: none; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px;
   }
+  .top-nav a:hover { border-color: var(--accent); }
 
-  .cat-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .search-box { position: relative; margin-bottom: 10px; }
+  .search-box input {
+    width: 100%; font: inherit; font-size: 0.95rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px; outline: none;
   }
+  .search-box input:focus { border-color: var(--accent); }
 
-  .cat-nav a {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--ink);
-    text-decoration: none;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 6px 12px;
+  .filter-group { margin-bottom: 8px; }
+  .filter-group-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--muted); margin: 10px 0 6px;
   }
-
-  .cat-nav a:hover {
-    border-color: var(--accent);
+  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    font-size: 0.78rem; font-weight: 600; color: var(--muted); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    user-select: none;
   }
-
-  .intro-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    margin: 20px 0;
-    font-size: 0.9rem;
-    color: var(--muted);
+  .chip.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .clear-filters {
+    font-size: 0.76rem; color: var(--accent); font-weight: 600; cursor: pointer;
+    background: none; border: none; padding: 5px 4px; display: none;
   }
+  .clear-filters.show { display: inline-block; }
 
-  .intro-card strong { color: var(--ink); }
-
-  .category {
-    margin-top: 30px;
-    scroll-margin-top: 14px;
-  }
-
-  .category-head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .category-icon {
-    font-family: "Fraunces", Georgia, serif;
-    font-size: 1.1rem;
-  }
-
-  .category-title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: 1.2rem;
-    margin: 0;
-  }
+  .result-count { font-size: 0.8rem; color: var(--muted); margin: 14px 0 10px; }
 
   .tool-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 14px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin-bottom: 12px;
   }
+  .tool-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .tool-name { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.05rem; margin: 0; }
+  .tool-tags { display: flex; gap: 5px; flex-wrap: wrap; margin: 4px 0 8px; }
+  .tag {
+    font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+    background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+  }
+  .tag.tag-projeto { background: var(--surface-2); color: var(--accent); border-color: var(--accent); }
+  .tool-desc { color: var(--ink); font-size: 0.88rem; margin: 0 0 10px; max-width: 68ch; }
 
-  .tool-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+  .plan-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .plan-badge {
+    font-size: 0.76rem; font-weight: 600; padding: 4px 10px; border-radius: 8px;
+    display: inline-flex; align-items: center; gap: 5px;
   }
+  .plan-badge.ok { background: var(--ok-bg); color: var(--ok-ink); }
+  .plan-badge.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .plan-badge.off { background: var(--off-bg); color: var(--off-ink); }
+  .verified-note { font-size: 0.72rem; color: var(--muted); }
 
-  .tool-icon {
-    font-size: 1.3rem;
-    line-height: 1;
-  }
+  .tutorials { border-top: 1px dashed var(--border); padding-top: 8px; margin-top: 4px; }
+  .tutorials-label { font-size: 0.76rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .tutorials ul { margin: 0; padding: 0 0 0 18px; }
+  .tutorials li { font-size: 0.82rem; margin-bottom: 2px; }
+  .tutorials a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .tutorials a:hover { text-decoration: underline; }
 
-  .tool-name {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    margin: 0;
-  }
-
-  .tool-desc {
-    color: var(--muted);
-    font-size: 0.88rem;
-    margin: 0 0 12px;
-    max-width: 64ch;
-  }
-
-  .tool-meta {
-    border-top: 1px dashed var(--border);
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .tool-meta-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 0.82rem;
-  }
-
-  .tool-meta-label {
-    font-weight: 600;
-    color: var(--ink);
-    flex-shrink: 0;
-    min-width: 92px;
-  }
-
-  .tool-meta-value {
-    color: var(--muted);
-  }
-
-  .tool-meta-value.empty {
-    font-style: italic;
-  }
-
-  .tool-meta-value a {
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .tool-meta-value a:hover {
-    text-decoration: underline;
-  }
-
-  footer.note {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.78rem;
-    margin-top: 30px;
-  }
+  .empty-state { text-align: center; color: var(--muted); font-size: 0.9rem; padding: 40px 0; }
 </style>
 
 <div class="topbar">
   <div class="topbar-inner">
-    <p class="eyebrow">Guia rápido das plataformas</p>
+    <p class="eyebrow">Acesso interno</p>
     <h1>Central de Ferramentas</h1>
-    <p class="subtitle">Pra que serve cada plataforma que seu negócio usa, em linguagem simples — com espaço pra tutorial em vídeo e material de apoio conforme forem ficando prontos.</p>
-    <nav class="cat-nav">
+    <p class="subtitle">Inventário das ferramentas usadas no processo de trabalho — busca e filtros por tipo, função e projeto.</p>
+    <nav class="top-nav">
       <a href="meus-sites.html">🔑 Meus Sites</a>
-      <a href="#presenca">🌐 Presença Online</a>
-      <a href="#redes">📱 Redes Sociais</a>
-      <a href="#google">📍 Google</a>
-      <a href="#gestao">⚙️ Automação &amp; Gestão</a>
     </nav>
+    <div class="search-box">
+      <input type="text" id="busca" placeholder="Buscar por nome ou descrição...">
+    </div>
+    <div id="filtros"></div>
   </div>
 </div>
 
 <div class="wrap">
-
-  <div class="intro-card">
-    Esta página é uma central viva: vou completando com vídeos e materiais de apoio aos poucos. <strong>Sempre que quiser algo novo aqui, é só me pedir</strong> — não precisa mexer em nada, eu atualizo e o link continua o mesmo.
-  </div>
-
-  <section class="category" id="presenca">
-    <div class="category-head">
-      <span class="category-icon">🌐</span>
-      <h2 class="category-title">Presença Online</h2>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">🌐</span>
-        <h3 class="tool-name">Site</h3>
-      </div>
-      <p class="tool-desc">O endereço oficial do seu negócio na internet — a base de tudo, pra onde você manda as pessoas quando quer que conheçam ou confiem no seu trabalho.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">✏️</span>
-        <h3 class="tool-name">Painel de Edição (CMS)</h3>
-      </div>
-      <p class="tool-desc">O painel onde você mesmo atualiza textos, fotos e preços do site, sem precisar mexer em código nem depender de mim pra cada alteração pequena.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="category" id="redes">
-    <div class="category-head">
-      <span class="category-icon">📱</span>
-      <h2 class="category-title">Redes Sociais</h2>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">📸</span>
-        <h3 class="tool-name">Instagram</h3>
-      </div>
-      <p class="tool-desc">Vitrine visual do seu negócio — fotos, vídeos e stories pra mostrar o dia a dia, criar proximidade e atrair clientes novos.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">📘</span>
-        <h3 class="tool-name">Facebook</h3>
-      </div>
-      <p class="tool-desc">Página pública do negócio, importante pra quem ainda usa o Facebook pra buscar horários, endereço e avaliações.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">🎥</span>
-        <h3 class="tool-name">YouTube</h3>
-      </div>
-      <p class="tool-desc">Canal de vídeos mais longos — tutoriais, bastidores, depoimentos. Também ajuda seu negócio a aparecer nas buscas do Google.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">🎵</span>
-        <h3 class="tool-name">TikTok</h3>
-      </div>
-      <p class="tool-desc">Vídeos curtos e dinâmicos pra alcançar um público novo, geralmente mais jovem, com conteúdo mais espontâneo.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">🎬</span>
-        <h3 class="tool-name">Kwai</h3>
-      </div>
-      <p class="tool-desc">Outra rede de vídeos curtos, forte em algumas regiões do Brasil — mais um canal pra distribuir o mesmo conteúdo do TikTok/Reels.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="category" id="google">
-    <div class="category-head">
-      <span class="category-icon">📍</span>
-      <h2 class="category-title">Google</h2>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">📍</span>
-        <h3 class="tool-name">Perfil da Empresa no Google</h3>
-      </div>
-      <p class="tool-desc">Sua ficha no Google Maps e nas buscas — é o que aparece quando alguém procura seu negócio pelo nome ou pelo tipo de serviço perto dele. Essencial pra avaliações e pra aparecer no mapa.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="category" id="gestao">
-    <div class="category-head">
-      <span class="category-icon">⚙️</span>
-      <h2 class="category-title">Automação &amp; Gestão</h2>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">📊</span>
-        <h3 class="tool-name">Meta Business Suite</h3>
-      </div>
-      <p class="tool-desc">Painel único pra gerenciar Instagram e Facebook juntos: mensagens, publicações agendadas e anúncios em um só lugar.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">🤖</span>
-        <h3 class="tool-name">ManyChat</h3>
-      </div>
-      <p class="tool-desc">Automação de respostas no Instagram e WhatsApp — programa mensagens automáticas pra quando alguém comenta ou manda mensagem, sem você precisar responder tudo na mão.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-
-    <div class="tool-card">
-      <div class="tool-head">
-        <span class="tool-icon">📈</span>
-        <h3 class="tool-name">Metricool</h3>
-      </div>
-      <p class="tool-desc">Painel pra agendar publicações em várias redes de uma vez só e ver relatórios de desempenho, tudo num lugar só.</p>
-      <div class="tool-meta">
-        <div class="tool-meta-row"><span class="tool-meta-label">🎥 Tutorial</span><span class="tool-meta-value empty">Em breve</span></div>
-        <div class="tool-meta-row"><span class="tool-meta-label">📄 Guia</span><span class="tool-meta-value empty">Em breve</span></div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="note">Central de Ferramentas — atualizada conforme os materiais forem ficando prontos.</footer>
+  <p class="result-count" id="contagem"></p>
+  <div id="lista"></div>
+  <div class="empty-state" id="vazio" hidden>Nenhuma ferramenta encontrada com esses filtros.</div>
 </div>
+
+<script>
+const FERRAMENTAS = [
+  {
+    nome: "ManyChat",
+    tipo: "Plataforma",
+    funcao: "Automação WhatsApp/Instagram",
+    descricao: "Cria fluxos de resposta automática para Instagram Direct, WhatsApp e Messenger — atendimento e captação sem precisar responder tudo manualmente.",
+    projetos: ["GMN"],
+    planoGratis: "limitado",
+    limiteGratis: "até 1.000 contatos, com recursos básicos de automação",
+    planoPago: "a partir de ~US$15/mês (varia conforme número de contatos)",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  },
+  {
+    nome: "Metricool",
+    tipo: "Plataforma",
+    funcao: "Agendamento e Analytics de Redes Sociais",
+    descricao: "Agenda publicações em várias redes de uma vez só e gera relatórios de desempenho, tudo em um único painel.",
+    projetos: ["GMN"],
+    planoGratis: "limitado",
+    limiteGratis: "1 marca/perfil, com funções básicas de agendamento e métricas",
+    planoPago: "a partir de ~US$18/mês (planos variam por número de marcas e recursos)",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  },
+  {
+    nome: "Meta Business Suite",
+    tipo: "Plataforma",
+    funcao: "Gestão de Instagram e Facebook",
+    descricao: "Painel oficial da Meta para gerenciar Instagram e Facebook juntos: mensagens, publicações agendadas e anúncios.",
+    projetos: ["GMN"],
+    planoGratis: "ilimitado",
+    limiteGratis: "",
+    planoPago: "Sem mensalidade fixa — só o investimento em anúncios, que é variável",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  },
+  {
+    nome: "Local Falcon",
+    tipo: "Plataforma",
+    funcao: "SEO Local — Ranking no Google Maps",
+    descricao: "Mostra como o negócio aparece no Google Maps em vários pontos geográficos ao redor, ajudando a identificar onde o SEO local precisa melhorar.",
+    projetos: ["GMN"],
+    planoGratis: "limitado",
+    limiteGratis: "alguns escaneamentos de teste grátis ao criar a conta",
+    planoPago: "a partir de ~US$20/mês (ou pacotes avulsos por escaneamento)",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  },
+  {
+    nome: "Google Search Console",
+    tipo: "Plataforma",
+    funcao: "SEO — Monitoramento de Buscas",
+    descricao: "Ferramenta oficial do Google para ver como o site aparece nas buscas, quais termos trazem visitas, e corrigir problemas técnicos de indexação.",
+    projetos: ["GMN"],
+    planoGratis: "ilimitado",
+    limiteGratis: "",
+    planoPago: "",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  },
+  {
+    nome: "Whitespark (Local Citation Finder)",
+    tipo: "Plataforma",
+    funcao: "SEO Local — Sondagem de Diretórios/Concorrentes",
+    descricao: "Encontra em quais diretórios e plataformas os concorrentes estão listados, para identificar onde também cadastrar o negócio (citações locais).",
+    projetos: ["GMN"],
+    planoGratis: "limitado",
+    limiteGratis: "número reduzido de buscas grátis por conta",
+    planoPago: "a partir de ~US$30/mês",
+    verificadoEm: "2026-09-16",
+    tutoriais: []
+  }
+];
+
+function $(id) { return document.getElementById(id); }
+
+let filtroAtivo = { tipo: null, funcao: null, projeto: null };
+let termoBusca = "";
+
+function valoresUnicos(campo) {
+  const set = new Set();
+  FERRAMENTAS.forEach(f => {
+    if (campo === "projetos") {
+      f.projetos.forEach(p => set.add(p));
+    } else {
+      set.add(f[campo]);
+    }
+  });
+  return Array.from(set).sort();
+}
+
+function renderFiltros() {
+  const grupos = [
+    { chave: "tipo", label: "Tipo", valores: valoresUnicos("tipo") },
+    { chave: "funcao", label: "Função", valores: valoresUnicos("funcao") },
+    { chave: "projeto", label: "Projeto", valores: valoresUnicos("projetos") }
+  ];
+  const html = grupos.map(g => `
+    <div class="filter-group">
+      <p class="filter-group-label">${g.label}</p>
+      <div class="chip-row">
+        ${g.valores.map(v => `<span class="chip ${filtroAtivo[g.chave] === v ? "active" : ""}" data-grupo="${g.chave}" data-valor="${v}">${v}</span>`).join("")}
+      </div>
+    </div>
+  `).join("") + `<button class="clear-filters ${(filtroAtivo.tipo || filtroAtivo.funcao || filtroAtivo.projeto) ? "show" : ""}" id="limpar-filtros">Limpar filtros</button>`;
+  $("filtros").innerHTML = html;
+
+  document.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const grupo = chip.dataset.grupo;
+      const valor = chip.dataset.valor;
+      filtroAtivo[grupo] = filtroAtivo[grupo] === valor ? null : valor;
+      renderFiltros();
+      renderLista();
+    });
+  });
+  const limpar = $("limpar-filtros");
+  if (limpar) {
+    limpar.addEventListener("click", () => {
+      filtroAtivo = { tipo: null, funcao: null, projeto: null };
+      renderFiltros();
+      renderLista();
+    });
+  }
+}
+
+function planoBadges(f) {
+  let badges = "";
+  if (f.planoGratis === "ilimitado") {
+    badges += `<span class="plan-badge ok">✓ Grátis ilimitado</span>`;
+  } else if (f.planoGratis === "limitado") {
+    badges += `<span class="plan-badge warn">⚠ Grátis limitado${f.limiteGratis ? " — " + f.limiteGratis : ""}</span>`;
+  } else {
+    badges += `<span class="plan-badge off">Sem versão grátis</span>`;
+  }
+  if (f.planoPago) {
+    badges += `<span class="plan-badge off">💳 ${f.planoPago}</span>`;
+  }
+  return badges;
+}
+
+function renderLista() {
+  const termo = termoBusca.trim().toLowerCase();
+  const filtradas = FERRAMENTAS.filter(f => {
+    if (termo && !(f.nome.toLowerCase().includes(termo) || f.descricao.toLowerCase().includes(termo))) return false;
+    if (filtroAtivo.tipo && f.tipo !== filtroAtivo.tipo) return false;
+    if (filtroAtivo.funcao && f.funcao !== filtroAtivo.funcao) return false;
+    if (filtroAtivo.projeto && !f.projetos.includes(filtroAtivo.projeto)) return false;
+    return true;
+  });
+
+  $("contagem").textContent = filtradas.length === FERRAMENTAS.length
+    ? `${FERRAMENTAS.length} ferramenta(s) cadastrada(s)`
+    : `${filtradas.length} de ${FERRAMENTAS.length} ferramenta(s)`;
+
+  $("vazio").hidden = filtradas.length > 0;
+
+  $("lista").innerHTML = filtradas.map(f => `
+    <div class="tool-card">
+      <div class="tool-top">
+        <h3 class="tool-name">${f.nome}</h3>
+      </div>
+      <div class="tool-tags">
+        <span class="tag">${f.tipo}</span>
+        <span class="tag">${f.funcao}</span>
+        ${f.projetos.map(p => `<span class="tag tag-projeto">${p}</span>`).join("")}
+      </div>
+      <p class="tool-desc">${f.descricao}</p>
+      <div class="plan-row">${planoBadges(f)}</div>
+      <p class="verified-note">Verificado em: ${f.verificadoEm}</p>
+      ${f.tutoriais.length > 0 ? `
+        <div class="tutorials">
+          <p class="tutorials-label">🎥 Tutoriais</p>
+          <ul>${f.tutoriais.map(t => `<li><a href="${t.url}" target="_blank" rel="noopener">${t.titulo}</a></li>`).join("")}</ul>
+        </div>
+      ` : ""}
+    </div>
+  `).join("");
+}
+
+$("busca").addEventListener("input", (e) => {
+  termoBusca = e.target.value;
+  renderLista();
+});
+
+renderFiltros();
+renderLista();
+</script>
 
 </body></html>
