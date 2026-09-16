@@ -78,6 +78,21 @@
     font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 6px; text-wrap: balance;
   }
   .subtitle { color: var(--muted); font-size: 0.92rem; margin: 0 0 14px; max-width: 62ch; }
+
+  .topbar-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .toggle-header {
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer;
+  }
+  .toggle-header:hover { border-color: var(--accent); color: var(--accent); }
+  .toggle-icon { display: inline-block; font-size: 0.7rem; transition: transform 0.2s ease; }
+  .topbar-collapsible {
+    display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.2s ease;
+  }
+  .topbar-collapsible-inner { overflow: hidden; min-height: 0; transition: opacity 0.15s ease; }
+  .topbar-collapsible.collapsed { grid-template-rows: 0fr; }
+  .topbar-collapsible.collapsed .topbar-collapsible-inner { opacity: 0; }
   .top-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
   .top-nav a {
     display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
@@ -174,13 +189,24 @@
 
 <div class="topbar">
   <div class="topbar-inner">
-    <p class="eyebrow">Acesso interno</p>
-    <h1>Central de Ferramentas</h1>
-    <p class="subtitle">Inventário das ferramentas usadas no processo de trabalho — busca e filtros por tipo, função e projeto.</p>
-    <div class="search-box">
-      <input type="text" id="busca" placeholder="Buscar por nome ou descrição...">
+    <div class="topbar-head">
+      <div class="topbar-head-text">
+        <p class="eyebrow">Acesso interno</p>
+        <h1>Central de Ferramentas</h1>
+      </div>
+      <button type="button" class="toggle-header" id="toggle-header" aria-expanded="true" aria-label="Recolher cabeçalho">
+        <span class="toggle-icon">▲</span>
+      </button>
     </div>
-    <div id="filtros"></div>
+    <div class="topbar-collapsible" id="topbar-collapsible">
+      <div class="topbar-collapsible-inner">
+        <p class="subtitle">Inventário das ferramentas usadas no processo de trabalho — busca e filtros por tipo, função e projeto.</p>
+        <div class="search-box">
+          <input type="text" id="busca" placeholder="Buscar por nome ou descrição...">
+        </div>
+        <div id="filtros"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -437,6 +463,29 @@ $("busca").addEventListener("input", (e) => {
 
 renderFiltros();
 renderLista();
+
+(function () {
+  const toggleBtn = $("toggle-header");
+  const collapsible = $("topbar-collapsible");
+  const icon = toggleBtn.querySelector(".toggle-icon");
+
+  function aplicarEstado(colapsado) {
+    collapsible.classList.toggle("collapsed", colapsado);
+    toggleBtn.setAttribute("aria-expanded", String(!colapsado));
+    toggleBtn.setAttribute("aria-label", colapsado ? "Expandir cabeçalho" : "Recolher cabeçalho");
+    icon.textContent = colapsado ? "▼" : "▲";
+  }
+
+  let colapsado = false;
+  try { colapsado = localStorage.getItem("cf-header-colapsado") === "1"; } catch (e) {}
+  aplicarEstado(colapsado);
+
+  toggleBtn.addEventListener("click", () => {
+    colapsado = !colapsado;
+    aplicarEstado(colapsado);
+    try { localStorage.setItem("cf-header-colapsado", colapsado ? "1" : "0"); } catch (e) {}
+  });
+})();
 </script>
 
 </body></html>
