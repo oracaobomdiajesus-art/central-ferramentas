@@ -1,6 +1,13 @@
 {
   "itens": [
     {
+      "icone": "🧰",
+      "nome": "Central de Ferramentas (esta página)",
+      "descricao": "Editável direto por aqui, sem precisar me pedir.",
+      "siteUrl": "https://central-ferramentas.oracaobomdiajesus.workers.dev",
+      "cmsUrl": "https://app.pagescms.org/oracaobomdiajesus-art/central-ferramentas/"
+    },
+    {
       "icone": "🥖",
       "nome": "Padaria Vila Nova",
       "descricao": "Site da cliente, no ar via Cloudflare.",
