@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F7F6;
+    --surface: #FFFFFF;
+    --surface-2: #EEF2EF;
+    --ink: #1F2A24;
+    --muted: #5B6B62;
+    --accent: #2F7A5C;
+    --accent-ink: #FFFFFF;
+    --border: #DDE3DE;
+    --radius: 14px;
+    --err-bg: #FBE7E5;
+    --err-ink: #A23B2E;
+    --ok-bg: #E3F2E9;
+    --ok-ink: #1D6B41;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 28px 16px 64px; }
+  .brand { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+  h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(1.5rem, 5vw, 1.9rem); margin: 0 0 8px; }
+  .subtitle { color: var(--muted); font-size: 0.92rem; margin: 0 0 24px; }
+
+  fieldset { border: none; padding: 0; margin: 0 0 20px; }
+  legend { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.05rem; padding: 0 0 10px; }
+
+  .servicos-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .servico-chip {
+    display: flex; align-items: center; gap: 8px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px; padding: 10px 16px;
+    font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  }
+  .servico-chip:has(input:checked) { border-color: var(--accent); background: var(--surface-2); color: var(--accent); }
+  .servico-chip input { accent-color: var(--accent); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 18px; }
+  .card[hidden] { display: none; }
+
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
+  label:first-child { margin-top: 0; }
+  .hint { font-size: 0.76rem; color: var(--muted); margin: -3px 0 6px; font-weight: 400; }
+  input[type="text"], input[type="tel"], input[type="email"], input[type="url"], textarea, select {
+    width: 100%; font: inherit; font-size: 0.92rem; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; outline: none;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  textarea { min-height: 90px; resize: vertical; }
+  input[type="file"] { font-size: 0.85rem; }
+
+  .radio-row { display: flex; gap: 16px; }
+  .radio-row label { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 0; }
+
+  .link-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .link-row input { flex: 1; }
+  .btn-add-link {
+    display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px dashed var(--border);
+    border-radius: 10px; padding: 8px 14px; font-size: 0.85rem; font-weight: 600; color: var(--accent);
+    cursor: pointer; margin-top: 4px;
+  }
+
+  button[type="submit"] {
+    display: block; width: 100%; border: none; border-radius: 999px; padding: 14px;
+    background: var(--accent); color: var(--accent-ink); font-size: 1rem; font-weight: 700; cursor: pointer;
+  }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  #msg { margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; display: none; }
+  #msg.erro { display: block; background: var(--err-bg); color: var(--err-ink); }
+  #msg.ok { display: block; background: var(--ok-bg); color: var(--ok-ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="brand">GMN</p>
+  <h1>Formulário de Onboarding</h1>
+  <p class="subtitle">Preencha com as informações do seu negócio. Só aparecem as seções dos serviços que você contratou.</p>
+
+  <form id="form-onboarding">
+    <fieldset>
+      <legend>Quais serviços você contratou?</legend>
+      <div class="servicos-row">
+        <label class="servico-chip"><input type="checkbox" name="servico" value="gbp" data-secao="secao-gbp"> Google Meu Negócio + Diretórios</label>
+        <label class="servico-chip"><input type="checkbox" name="servico" value="site" data-secao="secao-site"> Site</label>
+        <label class="servico-chip"><input type="checkbox" name="servico" value="biosite" data-secao="secao-biosite"> Biosite</label>
+      </div>
+    </fieldset>
+
+    <div class="card">
+      <fieldset>
+        <legend>Dados Gerais do Negócio</legend>
+        <label for="nomeNegocio">Nome do negócio *</label>
+        <input type="text" id="nomeNegocio" required>
+
+        <label for="nomeResponsavel">Nome do responsável *</label>
+        <input type="text" id="nomeResponsavel" required>
+
+        <label for="telefone">Telefone/WhatsApp *</label>
+        <input type="tel" id="telefone" required>
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email">
+
+        <label for="endereco">Endereço completo *</label>
+        <p class="hint">Rua, número, bairro, cidade, estado e CEP — precisa estar idêntico em todo lugar (Google, redes, diretórios).</p>
+        <textarea id="endereco" required></textarea>
+
+        <label for="instagramAtual">Instagram atual</label>
+        <p class="hint">Deixe em branco se ainda não tiver.</p>
+        <input type="url" id="instagramAtual" placeholder="https://instagram.com/seunegocio">
+
+        <label for="facebookAtual">Facebook atual</label>
+        <input type="url" id="facebookAtual" placeholder="https://facebook.com/seunegocio">
+      </fieldset>
+    </div>
+
+    <div class="card" id="secao-gbp" hidden>
+      <fieldset>
+        <legend>Google Meu Negócio / Diretórios</legend>
+        <label for="categoriaGbp">Categoria do negócio *</label>
+        <p class="hint">Ex: Padaria, Salão de Beleza, Clínica de Acupuntura</p>
+        <input type="text" id="categoriaGbp">
+
+        <label for="descricaoGbp">Descrição curta do negócio *</label>
+        <p class="hint">O que vocês fazem, diferencial, tempo de mercado — vai pro perfil do Google.</p>
+        <textarea id="descricaoGbp"></textarea>
+
+        <label for="horarioFuncionamento">Horário de funcionamento *</label>
+        <textarea id="horarioFuncionamento" placeholder="Seg a Sex: 8h às 18h&#10;Sáb: 8h às 12h&#10;Dom: fechado"></textarea>
+
+        <label>Já tem perfil no Google Meu Negócio?</label>
+        <div class="radio-row">
+          <label><input type="radio" name="jaTemGbp" value="Sim"> Sim</label>
+          <label><input type="radio" name="jaTemGbp" value="Não" checked> Não</label>
+        </div>
+
+        <label for="linkGbpAtual">Se sim, link do perfil atual</label>
+        <input type="url" id="linkGbpAtual">
+
+        <label for="fotosNegocio">Fotos do negócio (fachada, interior, produtos)</label>
+        <input type="file" id="fotosNegocio" accept="image/*" multiple>
+      </fieldset>
+    </div>
+
+    <div class="card" id="secao-site" hidden>
+      <fieldset>
+        <legend>Site</legend>
+        <label for="nomeFantasiaSite">Nome pro site</label>
+        <p class="hint">Se for diferente do nome oficial do negócio.</p>
+        <input type="text" id="nomeFantasiaSite">
+
+        <label for="quemSomos">Quem somos / história do negócio</label>
+        <textarea id="quemSomos"></textarea>
+
+        <label for="produtosServicos">Produtos ou serviços com preço</label>
+        <p class="hint">Um por linha, ex: "Corte Feminino - R$ 80,00 - inclui lavagem"</p>
+        <textarea id="produtosServicos" placeholder="Nome do item - Preço - Descrição (opcional)"></textarea>
+
+        <label for="corPreferida">Cor preferida pro site</label>
+        <input type="text" id="corPreferida" placeholder="Ex: verde, marrom, rosa">
+
+        <label for="chavePix">Chave Pix</label>
+        <p class="hint">Opcional — só aparece no site se preenchido.</p>
+        <input type="text" id="chavePix">
+
+        <label for="whatsappVendas">Link do WhatsApp de vendas</label>
+        <input type="url" id="whatsappVendas" placeholder="https://wa.me/55...">
+
+        <label for="fotosSite">Fotos pro site (logo, produtos, ambiente)</label>
+        <input type="file" id="fotosSite" accept="image/*" multiple>
+      </fieldset>
+    </div>
+
+    <div class="card" id="secao-biosite" hidden>
+      <fieldset>
+        <legend>Biosite</legend>
+        <label for="fotoPerfil">Foto de perfil</label>
+        <input type="file" id="fotoPerfil" accept="image/*">
+
+        <label for="bioBiosite">Bio curta</label>
+        <p class="hint">1 ou 2 frases sobre o negócio.</p>
+        <textarea id="bioBiosite"></textarea>
+
+        <label>Links que devem aparecer no biosite</label>
+        <div id="lista-links"></div>
+        <button type="button" class="btn-add-link" id="btn-add-link">+ Adicionar link</button>
+      </fieldset>
+    </div>
+
+    <button type="submit" id="btn-enviar">Enviar respostas</button>
+    <p id="msg"></p>
+  </form>
+</div>
+
+<script>
+  var checkboxesServico = document.querySelectorAll('input[name="servico"]');
+  checkboxesServico.forEach(function (cb) {
+    cb.addEventListener('change', function () {
+      document.getElementById(cb.dataset.secao).hidden = !cb.checked;
+    });
+  });
+
+  var listaLinksEl = document.getElementById('lista-links');
+  function adicionarLinha(titulo, url) {
+    var row = document.createElement('div');
+    row.className = 'link-row';
+    row.innerHTML =
+      '<input type="text" class="link-titulo" placeholder="Nome (ex: WhatsApp)" value="' + (titulo || '') + '">' +
+      '<input type="url" class="link-url" placeholder="https://..." value="' + (url || '') + '">';
+    listaLinksEl.appendChild(row);
+  }
+  for (var i = 0; i < 3; i++) adicionarLinha('', '');
+  document.getElementById('btn-add-link').addEventListener('click', function () { adicionarLinha('', ''); });
+
+  function arquivoParaBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var resultado = reader.result;
+        var base64 = resultado.substring(resultado.indexOf(',') + 1);
+        resolve({ nome: file.name, mimeType: file.type, base64: base64 });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function arquivosParaBase64(inputEl) {
+    if (!inputEl || !inputEl.files || !inputEl.files.length) return Promise.resolve([]);
+    return Promise.all(Array.prototype.map.call(inputEl.files, arquivoParaBase64));
+  }
+
+  var form = document.getElementById('form-onboarding');
+  var btnEnviar = document.getElementById('btn-enviar');
+  var msgEl = document.getElementById('msg');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    btnEnviar.disabled = true;
+    msgEl.className = '';
+    msgEl.textContent = 'Enviando...';
+    msgEl.style.display = 'block';
+
+    var servicos = Array.prototype.filter.call(checkboxesServico, function (cb) { return cb.checked; })
+      .map(function (cb) { return cb.value; });
+
+    Promise.all([
+      arquivosParaBase64(document.getElementById('fotosNegocio')),
+      arquivosParaBase64(document.getElementById('fotosSite')),
+      arquivosParaBase64(document.getElementById('fotoPerfil')),
+    ]).then(function (resultados) {
+      var jaTemGbpEl = document.querySelector('input[name="jaTemGbp"]:checked');
+
+      var linksBiosite = Array.prototype.map.call(listaLinksEl.querySelectorAll('.link-row'), function (row) {
+        return {
+          titulo: row.querySelector('.link-titulo').value.trim(),
+          url: row.querySelector('.link-url').value.trim(),
+        };
+      });
+
+      var dados = {
+        servicos: servicos,
+        nomeNegocio: document.getElementById('nomeNegocio').value.trim(),
+        nomeResponsavel: document.getElementById('nomeResponsavel').value.trim(),
+        telefone: document.getElementById('telefone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        endereco: document.getElementById('endereco').value.trim(),
+        instagramAtual: document.getElementById('instagramAtual').value.trim(),
+        facebookAtual: document.getElementById('facebookAtual').value.trim(),
+
+        categoriaGbp: document.getElementById('categoriaGbp').value.trim(),
+        descricaoGbp: document.getElementById('descricaoGbp').value.trim(),
+        horarioFuncionamento: document.getElementById('horarioFuncionamento').value.trim(),
+        jaTemGbp: jaTemGbpEl ? jaTemGbpEl.value : '',
+        linkGbpAtual: document.getElementById('linkGbpAtual').value.trim(),
+        fotosNegocio: resultados[0],
+
+        nomeFantasiaSite: document.getElementById('nomeFantasiaSite').value.trim(),
+        quemSomos: document.getElementById('quemSomos').value.trim(),
+        produtosServicos: document.getElementById('produtosServicos').value.trim(),
+        corPreferida: document.getElementById('corPreferida').value.trim(),
+        chavePix: document.getElementById('chavePix').value.trim(),
+        whatsappVendas: document.getElementById('whatsappVendas').value.trim(),
+        fotosSite: resultados[1],
+
+        fotoPerfil: resultados[2],
+        bioBiosite: document.getElementById('bioBiosite').value.trim(),
+        linksBiosite: linksBiosite,
+      };
+
+      google.script.run
+        .withSuccessHandler(function () {
+          msgEl.className = 'ok';
+          msgEl.textContent = 'Enviado com sucesso! Obrigado — já recebemos suas informações.';
+          form.reset();
+          document.querySelectorAll('.card[id^="secao-"]').forEach(function (c) { c.hidden = true; });
+        })
+        .withFailureHandler(function (erro) {
+          btnEnviar.disabled = false;
+          msgEl.className = 'erro';
+          msgEl.textContent = 'Erro ao enviar: ' + (erro && erro.message ? erro.message : erro);
+        })
+        .salvarResposta(dados);
+    }).catch(function (erro) {
+      btnEnviar.disabled = false;
+      msgEl.className = 'erro';
+      msgEl.textContent = 'Erro ao processar as fotos: ' + erro;
+    });
+  });
+</script>
+</body>
+</html>
