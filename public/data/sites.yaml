@@ -34,3 +34,9 @@ itens:
     descricao: "Versão completa do modelo institucional, com serviços, tabela de preços e blog."
     siteUrl: "https://site-modelo-institucional-completo.oracaobomdiajesus.workers.dev"
     cmsUrl: "https://app.pagescms.org/oracaobomdiajesus-art/site-modelo-institucional-completo/"
+
+  - icone: "🧰"
+    nome: "Guia de Ferramentas"
+    descricao: "Guia educativo com ferramentas gratuitas de marketing, passo a passo, publicado na Vercel."
+    siteUrl: ""
+    cmsUrl: "https://app.pagescms.org/oracaobomdiajesus-art/guia-ferramentas-mkt/"
