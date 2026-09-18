@@ -7,8 +7,8 @@ itens:
 
   - icone: "🥖"
     nome: "Padaria Vila Nova"
-    descricao: "Site da cliente, no ar via Cloudflare."
-    siteUrl: "https://padaria-vila-nova.oracaobomdiajesus.workers.dev"
+    descricao: "Site da cliente, no ar via Cloudflare Pages."
+    siteUrl: "https://padaria-vila-nova.pages.dev"
     cmsUrl: "https://app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/"
 
   - icone: "📄"
