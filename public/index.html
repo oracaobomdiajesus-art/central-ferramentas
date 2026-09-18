@@ -319,6 +319,7 @@ function renderSites() {
       ${s.descricao ? `<p class="site-desc">${s.descricao}</p>` : ""}
       <div class="site-links">
         ${s.siteUrl ? `<div class="site-links-row"><span class="site-links-label">🌐 Site</span><a href="${s.siteUrl}" target="_blank" rel="noopener">${s.siteUrl.replace(/^https?:\/\//, "")}</a></div>` : ""}
+        ${s.admUrl ? `<div class="site-links-row"><span class="site-links-label">🔧 Admin</span><a href="${s.admUrl}" target="_blank" rel="noopener">${s.admUrl.replace(/^https?:\/\//, "")}</a></div>` : ""}
         ${s.cmsUrl ? `<div class="site-links-row"><span class="site-links-label">✏️ CMS</span><a href="${s.cmsUrl}" target="_blank" rel="noopener">${s.cmsUrl.replace(/^https?:\/\//, "")}</a></div>` : ""}
       </div>
     </div>

@@ -9,6 +9,7 @@ itens:
     nome: "Padaria Vila Nova"
     descricao: "Site da cliente, no ar via Cloudflare Pages."
     siteUrl: "https://padaria-vila-nova.pages.dev"
+    admUrl: "https://padaria-vila-nova.pages.dev/admin/"
     cmsUrl: "https://app.pagescms.org/oracaobomdiajesus-art/padaria-vila-nova/"
 
   - icone: "📄"
