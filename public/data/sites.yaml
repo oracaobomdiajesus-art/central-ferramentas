@@ -37,6 +37,6 @@ itens:
 
   - icone: "🧰"
     nome: "Guia de Ferramentas"
-    descricao: "Guia educativo com ferramentas gratuitas de marketing, passo a passo, publicado na Vercel."
-    siteUrl: ""
+    descricao: "Guia educativo com ferramentas gratuitas de marketing, passo a passo."
+    siteUrl: "https://guia-ferramentas-mkt.oracaobomdiajesus.workers.dev"
     cmsUrl: "https://app.pagescms.org/oracaobomdiajesus-art/guia-ferramentas-mkt/"
