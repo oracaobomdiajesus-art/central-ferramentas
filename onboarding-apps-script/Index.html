@@ -83,6 +83,9 @@
   #msg { margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; display: none; }
   #msg.erro { display: block; background: var(--err-bg); color: var(--err-ink); }
   #msg.ok { display: block; background: var(--ok-bg); color: var(--ok-ink); }
+
+  .banner-pacote { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; }
+  .banner-pacote strong { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -91,8 +94,12 @@
   <h1>Formulário de Onboarding</h1>
   <p class="subtitle">Preencha com as informações do seu negócio. Só aparecem as seções dos serviços que você contratou.</p>
 
+  <div class="banner-pacote" id="banner-pacote" hidden>
+    Baseado no pacote que você contratou, mostrando abaixo só as seções: <strong id="banner-pacote-lista"></strong>.
+  </div>
+
   <form id="form-onboarding">
-    <fieldset>
+    <fieldset id="seletor-servicos">
       <legend>Quais serviços você contratou?</legend>
       <div class="servicos-row">
         <label class="servico-chip"><input type="checkbox" name="servico" value="gbp" data-secao="secao-gbp"> Google Meu Negócio + Diretórios</label>
@@ -208,12 +215,36 @@
 </div>
 
 <script>
+  var NOMES_SERVICO = { gbp: 'Google Meu Negócio + Diretórios', site: 'Site', biosite: 'Biosite' };
+
   var checkboxesServico = document.querySelectorAll('input[name="servico"]');
   checkboxesServico.forEach(function (cb) {
     cb.addEventListener('change', function () {
       document.getElementById(cb.dataset.secao).hidden = !cb.checked;
     });
   });
+
+  // Quando o link já vem com "?servicos=gbp,site" (gerado pela página
+  // "?painel=1"), o cliente não escolhe nada: as seções certas já aparecem
+  // marcadas e travadas, e o seletor manual some — evita erro de o cliente
+  // marcar um serviço que ele não contratou.
+  var servicosParam = new URLSearchParams(window.location.search).get('servicos');
+  if (servicosParam) {
+    var servicosPreDefinidos = servicosParam.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    checkboxesServico.forEach(function (cb) {
+      var ativo = servicosPreDefinidos.indexOf(cb.value) !== -1;
+      cb.checked = ativo;
+      cb.disabled = true;
+      document.getElementById(cb.dataset.secao).hidden = !ativo;
+    });
+    document.getElementById('seletor-servicos').hidden = true;
+
+    var nomesAtivos = servicosPreDefinidos.map(function (s) { return NOMES_SERVICO[s] || s; });
+    if (nomesAtivos.length) {
+      document.getElementById('banner-pacote-lista').textContent = nomesAtivos.join(', ');
+      document.getElementById('banner-pacote').hidden = false;
+    }
+  }
 
   var listaLinksEl = document.getElementById('lista-links');
   function adicionarLinha(titulo, url) {

@@ -2,8 +2,8 @@
 //
 // Como publicar:
 // 1. Crie um projeto novo em script.google.com (Apps Script).
-// 2. Cole este arquivo como "Code.gs" e o "Index.html" como um arquivo HTML
-//    chamado exatamente "Index".
+// 2. Cole este arquivo como "Code.gs" e "Index.html" e "GerarLink.html" como
+//    dois arquivos HTML separados, com esses nomes exatos.
 // 3. No editor, selecione a função "configurar" no menu de funções e clique
 //    em Executar (rode só uma vez). Na primeira vez ele vai pedir autorização
 //    de acesso ao Google Sheets e Drive da sua própria conta — autorize.
@@ -11,15 +11,20 @@
 //    fotos que foram criadas — salve esses links pra você.
 // 5. Clique em "Implantar" > "Nova implantação" > tipo "App da Web".
 //    Executar como: Eu (sua conta). Quem pode acessar: Qualquer pessoa.
-// 6. Copie o link do App da Web gerado — é esse link que você manda pro
-//    cliente preencher.
+// 6. Copie o link do App da Web gerado, e acrescente "?painel=1" no final —
+//    esse é o SEU link, de uso interno: marca os serviços que o cliente
+//    contratou e ele gera o link certo pra você mandar pro cliente. O link
+//    sem "?painel=1" é o formulário puro (só use direto se quiser que o
+//    próprio cliente escolha os serviços).
 
 const SHEET_PROPS_KEY = "PLANILHA_ID";
 const PASTA_PROPS_KEY = "PASTA_ID";
 
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile("Index")
-    .setTitle("Formulário de Onboarding — GMN")
+function doGet(e) {
+  const painel = Boolean(e && e.parameter && e.parameter.painel === "1");
+  const pagina = painel ? "GerarLink" : "Index";
+  return HtmlService.createHtmlOutputFromFile(pagina)
+    .setTitle(painel ? "Gerar Link — GMN" : "Formulário de Onboarding — GMN")
     .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
 
