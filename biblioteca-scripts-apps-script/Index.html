@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F7F6;
+    --surface: #FFFFFF;
+    --surface-2: #EEF2EF;
+    --ink: #1F2A24;
+    --muted: #5B6B62;
+    --accent: #2F7A5C;
+    --accent-ink: #FFFFFF;
+    --border: #DDE3DE;
+    --radius: 14px;
+    --err-bg: #FBE7E5;
+    --err-ink: #A23B2E;
+    --ok-bg: #E3F2E9;
+    --ok-ink: #1D6B41;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px 64px; }
+  .brand { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+  h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(1.5rem, 5vw, 1.9rem); margin: 0 0 8px; }
+  .subtitle { color: var(--muted); font-size: 0.92rem; margin: 0 0 20px; }
+
+  .toolbar { display: flex; gap: 8px; margin-bottom: 14px; }
+  .toolbar input[type="search"] {
+    flex: 1; font: inherit; font-size: 0.9rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; outline: none;
+  }
+  .toolbar input[type="search"]:focus { border-color: var(--accent); }
+  .btn { border: none; border-radius: 999px; padding: 10px 18px; font-size: 0.9rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--ink); }
+  .btn-small { padding: 6px 12px; font-size: 0.8rem; }
+  .btn-perigo { background: var(--err-bg); color: var(--err-ink); }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .chip {
+    font-size: 0.8rem; font-weight: 600; color: var(--muted); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; cursor: pointer;
+  }
+  .chip.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; }
+  .card[hidden] { display: none; }
+
+  .form-card label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
+  .form-card label:first-child { margin-top: 0; }
+  .form-card input[type="text"], .form-card textarea {
+    width: 100%; font: inherit; font-size: 0.92rem; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; outline: none;
+  }
+  .form-card input:focus, .form-card textarea:focus { border-color: var(--accent); }
+  .form-card textarea { min-height: 140px; resize: vertical; }
+  .form-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+  .script-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .script-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag-nicho, .tag-tipo {
+    font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  }
+  .tag-nicho { background: var(--ok-bg); color: var(--ok-ink); }
+  .tag-tipo { background: var(--surface-2); color: var(--muted); }
+  .script-texto { white-space: pre-wrap; font-size: 0.9rem; margin: 0 0 10px; }
+  .script-rodape { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .script-data { font-size: 0.75rem; color: var(--muted); }
+  .script-acoes { display: flex; gap: 6px; }
+
+  #msg { margin-bottom: 14px; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; display: none; }
+  #msg.erro { display: block; background: var(--err-bg); color: var(--err-ink); }
+  #msg.ok { display: block; background: var(--ok-bg); color: var(--ok-ink); }
+  .vazio { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="brand">GMN — uso interno</p>
+  <h1>Biblioteca de Scripts</h1>
+  <p class="subtitle">Seus scripts de venda organizados por nicho de público. Edita aqui ou direto na planilha — fica sincronizado.</p>
+
+  <p id="msg"></p>
+
+  <div class="card form-card" id="form-card" hidden>
+    <input type="hidden" id="script-id">
+    <label for="script-nicho">Nicho de público</label>
+    <input type="text" id="script-nicho" list="lista-nichos" placeholder="Ex: Rádio, Outdoor, Associação Comercial">
+    <datalist id="lista-nichos"></datalist>
+
+    <label for="script-tipo">Tipo de script</label>
+    <input type="text" id="script-tipo" placeholder="Ex: Abordagem pessoal, Abordagem online, Quebra de objeção">
+
+    <label for="script-texto">Texto do script</label>
+    <textarea id="script-texto"></textarea>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-primary" id="btn-salvar-script">Salvar</button>
+      <button type="button" class="btn btn-secondary" id="btn-cancelar-form">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="busca" placeholder="Buscar por texto, nicho ou tipo...">
+    <button type="button" class="btn btn-primary" id="btn-novo">+ Novo Script</button>
+  </div>
+
+  <div class="chip-row" id="chips-nicho"></div>
+
+  <div id="lista"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum script cadastrado ainda.</p>
+</div>
+
+<script>
+  var SCRIPTS = [];
+  var nichoAtivo = '';
+  var termoBusca = '';
+
+  var msgEl = document.getElementById('msg');
+  var listaEl = document.getElementById('lista');
+  var vazioEl = document.getElementById('vazio');
+  var chipsEl = document.getElementById('chips-nicho');
+  var formCardEl = document.getElementById('form-card');
+  var listaNichosEl = document.getElementById('lista-nichos');
+
+  function setMsg(texto, tipo) {
+    msgEl.textContent = texto || '';
+    msgEl.className = tipo || '';
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  function formatarData(iso) {
+    if (!iso) return '';
+    try {
+      return new Date(iso).toLocaleString('pt-BR');
+    } catch (e) {
+      return iso;
+    }
+  }
+
+  function nichosUnicos() {
+    var vistos = {};
+    var lista = [];
+    SCRIPTS.forEach(function (s) {
+      if (s.nicho && !vistos[s.nicho]) {
+        vistos[s.nicho] = true;
+        lista.push(s.nicho);
+      }
+    });
+    return lista.sort(function (a, b) { return a.localeCompare(b); });
+  }
+
+  function renderChips() {
+    var nichos = nichosUnicos();
+    chipsEl.innerHTML = '';
+
+    var todos = document.createElement('span');
+    todos.className = 'chip' + (nichoAtivo === '' ? ' active' : '');
+    todos.textContent = 'Todos';
+    todos.addEventListener('click', function () { nichoAtivo = ''; renderChips(); renderLista(); });
+    chipsEl.appendChild(todos);
+
+    nichos.forEach(function (nicho) {
+      var chip = document.createElement('span');
+      chip.className = 'chip' + (nichoAtivo === nicho ? ' active' : '');
+      chip.textContent = nicho;
+      chip.addEventListener('click', function () { nichoAtivo = nicho; renderChips(); renderLista(); });
+      chipsEl.appendChild(chip);
+    });
+
+    listaNichosEl.innerHTML = nichos.map(function (n) { return '<option value="' + escapeHtml(n) + '">'; }).join('');
+  }
+
+  function renderLista() {
+    var termo = termoBusca.trim().toLowerCase();
+    var filtrados = SCRIPTS.filter(function (s) {
+      if (nichoAtivo && s.nicho !== nichoAtivo) return false;
+      if (!termo) return true;
+      var alvo = (s.nicho + ' ' + s.tipo + ' ' + s.texto).toLowerCase();
+      return alvo.indexOf(termo) !== -1;
+    });
+
+    vazioEl.hidden = filtrados.length > 0;
+    listaEl.innerHTML = filtrados.map(function (s) {
+      return '' +
+        '<div class="card">' +
+          '<div class="script-head">' +
+            '<div class="script-tags">' +
+              (s.nicho ? '<span class="tag-nicho">' + escapeHtml(s.nicho) + '</span>' : '') +
+              (s.tipo ? '<span class="tag-tipo">' + escapeHtml(s.tipo) + '</span>' : '') +
+            '</div>' +
+          '</div>' +
+          '<p class="script-texto">' + escapeHtml(s.texto) + '</p>' +
+          '<div class="script-rodape">' +
+            '<span class="script-data">Atualizado em ' + formatarData(s.atualizadoEm) + '</span>' +
+            '<div class="script-acoes">' +
+              '<button type="button" class="btn btn-secondary btn-small" data-acao="editar" data-id="' + s.id + '">Editar</button>' +
+              '<button type="button" class="btn btn-perigo btn-small" data-acao="excluir" data-id="' + s.id + '">Excluir</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function abrirFormNovo() {
+    document.getElementById('script-id').value = '';
+    document.getElementById('script-nicho').value = '';
+    document.getElementById('script-tipo').value = '';
+    document.getElementById('script-texto').value = '';
+    formCardEl.hidden = false;
+    document.getElementById('script-nicho').focus();
+  }
+
+  function abrirFormEditar(id) {
+    var script = SCRIPTS.filter(function (s) { return String(s.id) === String(id); })[0];
+    if (!script) return;
+    document.getElementById('script-id').value = script.id;
+    document.getElementById('script-nicho').value = script.nicho || '';
+    document.getElementById('script-tipo').value = script.tipo || '';
+    document.getElementById('script-texto').value = script.texto || '';
+    formCardEl.hidden = false;
+    document.getElementById('script-nicho').focus();
+  }
+
+  document.getElementById('btn-novo').addEventListener('click', abrirFormNovo);
+  document.getElementById('btn-cancelar-form').addEventListener('click', function () { formCardEl.hidden = true; });
+
+  document.getElementById('btn-salvar-script').addEventListener('click', function () {
+    var dados = {
+      id: document.getElementById('script-id').value || null,
+      nicho: document.getElementById('script-nicho').value.trim(),
+      tipo: document.getElementById('script-tipo').value.trim(),
+      texto: document.getElementById('script-texto').value.trim(),
+    };
+    if (!dados.nicho || !dados.texto) {
+      setMsg('Preencha ao menos o nicho e o texto do script.', 'erro');
+      return;
+    }
+
+    setMsg('Salvando...', '');
+    google.script.run
+      .withSuccessHandler(function () {
+        formCardEl.hidden = true;
+        setMsg('Salvo com sucesso.', 'ok');
+        carregar();
+      })
+      .withFailureHandler(function (erro) {
+        setMsg('Erro ao salvar: ' + (erro && erro.message ? erro.message : erro), 'erro');
+      })
+      .salvarScript(dados);
+  });
+
+  listaEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-acao]');
+    if (!btn) return;
+    var id = btn.dataset.id;
+
+    if (btn.dataset.acao === 'editar') {
+      abrirFormEditar(id);
+    } else if (btn.dataset.acao === 'excluir') {
+      if (!window.confirm('Excluir este script? Essa ação não pode ser desfeita.')) return;
+      setMsg('Excluindo...', '');
+      google.script.run
+        .withSuccessHandler(function () {
+          setMsg('Script excluído.', 'ok');
+          carregar();
+        })
+        .withFailureHandler(function (erro) {
+          setMsg('Erro ao excluir: ' + (erro && erro.message ? erro.message : erro), 'erro');
+        })
+        .excluirScript(id);
+    }
+  });
+
+  document.getElementById('busca').addEventListener('input', function (e) {
+    termoBusca = e.target.value;
+    renderLista();
+  });
+
+  function carregar() {
+    google.script.run
+      .withSuccessHandler(function (dados) {
+        SCRIPTS = dados || [];
+        renderChips();
+        renderLista();
+      })
+      .withFailureHandler(function (erro) {
+        setMsg('Erro ao carregar: ' + (erro && erro.message ? erro.message : erro), 'erro');
+      })
+      .listarScripts();
+  }
+
+  carregar();
+</script>
+</body>
+</html>
