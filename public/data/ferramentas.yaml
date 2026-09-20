@@ -76,3 +76,94 @@ itens:
     planoPago: "a partir de ~US$30/mês"
     verificadoEm: "2026-09-16"
     tutoriais: []
+
+  - nome: "TNGLeads"
+    tipo: "Plataforma"
+    funcao: "Prospecção — Extração de Leads do Google Maps"
+    descricao: "Ferramenta indicada no curso (Tiago) para raspar leads de negócios diretamente do Google Maps por nicho e região, útil pra encontrar clientes em potencial pro pacote de GMN."
+    link: "https://tngleads.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "não verificado nesta sessão — conferir condições atuais no site"
+    planoPago: "não verificado nesta sessão — conferir no site"
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "PhantomBuster"
+    tipo: "Plataforma"
+    funcao: "Automação e Extração de Dados (Web Scraping)"
+    descricao: "Indicada no curso (Tiago). Roda automações prontas ('Phantoms') pra extrair dados e automatizar tarefas em redes sociais e sites, útil pra prospecção e pesquisa de concorrência."
+    link: "https://phantombuster.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "não verificado nesta sessão — conferir condições atuais no site"
+    planoPago: "não verificado nesta sessão — conferir no site"
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "GBPCheck"
+    tipo: "Plataforma"
+    funcao: "Auditoria de Perfil no Google Meu Negócio"
+    descricao: "Indicada no curso (Tiago). Faz um diagnóstico automático do perfil no Google Meu Negócio, apontando o que está incompleto ou pode melhorar — útil na etapa de diagnóstico do Pacote de Entrada."
+    link: "https://gbpcheck.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "não verificado nesta sessão — conferir condições atuais no site"
+    planoPago: "não verificado nesta sessão — conferir no site"
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "Ubersuggest"
+    tipo: "Plataforma"
+    funcao: "SEO — Pesquisa de Palavras-chave"
+    descricao: "Ferramenta de SEO (Neil Patel) pra pesquisar palavras-chave, volume de busca e ideias de conteúdo — indicada no curso (Tiago) como apoio ao SEO local."
+    link: "https://neilpatel.com/ubersuggest/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "número reduzido de buscas grátis por dia"
+    planoPago: "não verificado nesta sessão — conferir no site"
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "Semrush"
+    tipo: "Plataforma"
+    funcao: "SEO e Marketing Digital — Suíte Completa"
+    descricao: "Suíte completa de SEO/marketing (pesquisa de palavras-chave, auditoria de site, análise de concorrentes). Indicada no curso (Tiago) como ferramenta mais robusta de SEO."
+    link: "https://www.semrush.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "limitado"
+    limiteGratis: "número reduzido de buscas grátis por dia"
+    planoPago: "não verificado nesta sessão — conferir no site"
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "Google Sites (Templates)"
+    tipo: "Recurso"
+    funcao: "Modelos de Site Gratuitos"
+    descricao: "Indicado no curso (Tiago) como alternativa gratuita pra montar um site simples pro cliente quando não compensa usar o Pages CMS/Cloudflare."
+    link: "https://sites.google.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "ilimitado"
+    limiteGratis: ""
+    planoPago: ""
+    verificadoEm: ""
+    tutoriais: []
+
+  - nome: "Foursquare"
+    tipo: "Diretório"
+    funcao: "SEO Local — Cadastro em Diretório"
+    descricao: "Diretório local indicado no curso (Tiago) pra cadastro do negócio — mesma lógica dos diretórios já cadastrados na Lista de Diretórios do Pacote de Entrada."
+    link: "https://foursquare.com/"
+    projetos:
+      - "GMN"
+    planoGratis: "ilimitado"
+    limiteGratis: ""
+    planoPago: ""
+    verificadoEm: ""
+    tutoriais: []
