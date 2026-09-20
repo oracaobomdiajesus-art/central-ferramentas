@@ -186,6 +186,24 @@
   .site-links-row a { color: var(--accent); font-weight: 600; text-decoration: none; word-break: break-all; }
   .site-links-row a:hover { text-decoration: underline; }
   .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  .estudo-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 18px; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .estudo-info { display: flex; flex-direction: column; gap: 3px; }
+  .estudo-titulo { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 0.98rem; }
+  .estudo-titulo a { color: inherit; text-decoration: none; }
+  .estudo-titulo a:hover { text-decoration: underline; }
+  .estudo-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+  .estudo-status {
+    font-size: 0.76rem; font-weight: 600; padding: 4px 10px; border-radius: 8px; flex-shrink: 0;
+  }
+  .estudo-status.nao-iniciado { background: var(--off-bg); color: var(--off-ink); }
+  .estudo-status.em-andamento { background: var(--warn-bg); color: var(--warn-ink); }
+  .estudo-status.concluido { background: var(--ok-bg); color: var(--ok-ink); }
+  .estudo-status.comprar { background: var(--surface-2); color: var(--accent); border: 1px solid var(--accent); }
 </style>
 
 <div class="topbar">
@@ -218,6 +236,11 @@
 
   <hr class="divider">
 
+  <h2 class="section-title">📚 Livros e Estudos</h2>
+  <div id="lista-estudos"></div>
+
+  <hr class="divider">
+
   <h2 class="section-title">🧰 Ferramentas</h2>
   <p class="result-count" id="contagem"></p>
   <div id="lista"></div>
@@ -227,6 +250,7 @@
 <script>
 let FERRAMENTAS = [];
 let SITES = [];
+let ESTUDOS = [];
 const FERRAMENTAS_SEED = [
   {
     nome: "ManyChat",
@@ -309,8 +333,36 @@ const FERRAMENTAS_SEED = [
 ];
 
 const SITES_SEED = [];
+const ESTUDOS_SEED = [];
 
 function $(id) { return document.getElementById(id); }
+
+function classeStatus(status) {
+  const s = (status || "").toLowerCase();
+  if (s.startsWith("conclu")) return "concluido";
+  if (s.startsWith("em andamento")) return "em-andamento";
+  if (s.startsWith("para comprar")) return "comprar";
+  return "nao-iniciado";
+}
+
+function renderEstudos() {
+  if (!ESTUDOS.length) {
+    $("lista-estudos").innerHTML = `<p class="empty-state">Nenhum livro ou estudo cadastrado ainda.</p>`;
+    return;
+  }
+  $("lista-estudos").innerHTML = ESTUDOS.map((e) => `
+    <div class="estudo-card">
+      <div class="estudo-info">
+        <span class="estudo-titulo">${e.link ? `<a href="${e.link}" target="_blank" rel="noopener">${e.titulo}</a>` : e.titulo}</span>
+        <div class="estudo-meta">
+          <span class="tag">${e.tipo || ""}</span>
+          ${e.categoria ? `<span class="tag tag-projeto">${e.categoria}</span>` : ""}
+        </div>
+      </div>
+      <span class="estudo-status ${classeStatus(e.status)}">${e.status || "Não iniciado"}</span>
+    </div>
+  `).join("");
+}
 
 function renderSites() {
   $("lista-sites").innerHTML = SITES.map(s => `
@@ -438,19 +490,24 @@ $("busca").addEventListener("input", (e) => {
 
 async function carregarDados() {
   try {
-    const [rFerramentas, rSites] = await Promise.all([
+    const [rFerramentas, rSites, rEstudos] = await Promise.all([
       fetch("/data/ferramentas.yaml", { cache: "no-store" }),
-      fetch("/data/sites.yaml", { cache: "no-store" })
+      fetch("/data/sites.yaml", { cache: "no-store" }),
+      fetch("/data/estudos.yaml", { cache: "no-store" })
     ]);
     const dadosFerramentas = rFerramentas.ok ? jsyaml.load(await rFerramentas.text()) : null;
     const dadosSites = rSites.ok ? jsyaml.load(await rSites.text()) : null;
+    const dadosEstudos = rEstudos.ok ? jsyaml.load(await rEstudos.text()) : null;
     FERRAMENTAS = (dadosFerramentas && dadosFerramentas.itens) || FERRAMENTAS_SEED;
     SITES = (dadosSites && dadosSites.itens) || SITES_SEED;
+    ESTUDOS = (dadosEstudos && dadosEstudos.itens) || ESTUDOS_SEED;
   } catch (e) {
     FERRAMENTAS = FERRAMENTAS_SEED;
     SITES = SITES_SEED;
+    ESTUDOS = ESTUDOS_SEED;
   }
   renderSites();
+  renderEstudos();
   renderFiltros();
   renderLista();
 }

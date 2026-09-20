@@ -105,3 +105,50 @@ content:
           - name: "cmsUrl"
             label: "Link do CMS"
             type: "string"
+
+  - name: "estudos"
+    label: "📚 Livros e Estudos"
+    type: "file"
+    path: "public/data/estudos.yaml"
+    format: "yaml"
+    fields:
+      - name: "itens"
+        label: "Itens de estudo"
+        type: "object"
+        list: true
+        fields:
+          - name: "titulo"
+            label: "Título"
+            type: "string"
+            required: true
+          - name: "tipo"
+            label: "Tipo"
+            type: "select"
+            options:
+              values:
+                - value: "Livro"
+                  label: "Livro"
+                - value: "Vídeo"
+                  label: "Vídeo"
+                - value: "Artigo"
+                  label: "Artigo"
+          - name: "categoria"
+            label: "Categoria"
+            description: "Ex: Marketing, Investimentos, Desenvolvimento pessoal, Negócios"
+            type: "string"
+          - name: "status"
+            label: "Status"
+            type: "select"
+            options:
+              values:
+                - value: "Não iniciado"
+                  label: "Não iniciado"
+                - value: "Em andamento"
+                  label: "Em andamento"
+                - value: "Concluído"
+                  label: "Concluído"
+                - value: "Para comprar"
+                  label: "Para comprar"
+          - name: "link"
+            label: "Link (se for vídeo ou artigo online)"
+            type: "string"

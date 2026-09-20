@@ -1,0 +1,36 @@
+itens:
+  - titulo: "Segredos Ponto Com"
+    tipo: "Livro"
+    categoria: "Marketing"
+    status: "Não iniciado"
+    link: ""
+
+  - titulo: "Charlie Munger: O Investidor Completo"
+    tipo: "Livro"
+    categoria: "Investimentos"
+    status: "Não iniciado"
+    link: ""
+
+  - titulo: "Bíblia Sagrada"
+    tipo: "Livro"
+    categoria: "Desenvolvimento pessoal"
+    status: "Não iniciado"
+    link: ""
+
+  - titulo: "O Homem Mais Rico da Babilônia"
+    tipo: "Livro"
+    categoria: "Desenvolvimento pessoal"
+    status: "Não iniciado"
+    link: ""
+
+  - titulo: "Prospecção por WhatsApp para Vender Google Meu Negócio"
+    tipo: "Vídeo"
+    categoria: "Negócios"
+    status: "Não iniciado"
+    link: ""
+
+  - titulo: "Como Chegar ao Primeiro Milhão Investindo R$500 por Mês?"
+    tipo: "Vídeo"
+    categoria: "Investimentos"
+    status: "Não iniciado"
+    link: ""
